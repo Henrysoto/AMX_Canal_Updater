@@ -8,7 +8,7 @@ PROVIDERS = ['Canalsat', 'Bouygues', 'Orange', 'SFR']
 class Updater(object):
     @cherrypy.expose
     def index(self):
-        return ''
+        return '<a href="/get/canalsat/latest/csv">/get/canalsat/latest/csv</a>'
 
     @cherrypy.expose
     def get(self, provider, version='latest', fmt='csv'):
@@ -17,7 +17,11 @@ class Updater(object):
                 if version == 'latest':
                     if fmt == 'csv':
                         res = CSVFormatter(version, provider)
-                        return serve_file(os.path.realpath(res.parse_file()), "application/x-download", "attachment")
+                        path = res.parse_file()
+                        return serve_file(path,
+                            "application/x-download",
+                            "attachment",
+                            os.path.basename(path))
         except:
             raise cherrypy.HTTPError(404)
         #return f"<pre>Provider:\t{provider}\nVersion:\t{version}\nFormat:\t\t{fmt}</pre>"

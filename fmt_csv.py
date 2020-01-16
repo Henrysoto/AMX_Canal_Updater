@@ -1,19 +1,9 @@
-import os
 import csv
+import os
+from fmt import Fmt
 
 
-class CSVFormatter:
-    def __init__(self, version, provider):
-        self.version = version
-        self.provider = str(provider)
-    
-    def get_provider_dir(self):
-        return os.path.join('.', 'channels', self.provider.capitalize(), '')
-    
-    def get_provider_file(self):
-        path = self.get_provider_dir()
-        return f"{path}{self.provider.lower()}_{self.version}"
-    
+class CSVFormatter(Fmt):
     def parse_file(self):
         csvf = f"{self.get_provider_file()}.csv"
         txtf = f"{self.get_provider_file()}.txt"
@@ -24,6 +14,7 @@ class CSVFormatter:
                     for line in ftxt:
                         line = line.rstrip('\n').split('-')
                         w.writerow(line)
-        
-        return csvf
-    
+            return os.path.realpath(csvf)
+        else:
+            return os.path.realpath(csvf)
+
