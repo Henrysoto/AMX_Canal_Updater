@@ -1,5 +1,3 @@
-# pylint: disable=invalid-sequence-index
-
 import os
 from configparser import ConfigParser
 from datetime import datetime as dt
