@@ -17,4 +17,3 @@ class CSVFormatter(Fmt):
             return os.path.realpath(csvf)
         else:
             return os.path.realpath(csvf)
-
