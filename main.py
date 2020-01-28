@@ -1,7 +1,8 @@
 import os
 import cherrypy
 from cherrypy.lib.static import serve_file
-from fmt_csv import CSVFormatter
+from CSV import CSVFormatter
+from Version import version_controller
 
 PROVIDERS = ['Canalsat', 'Bouygues', 'Orange', 'SFR']
 
@@ -13,7 +14,13 @@ class Updater(object):
 
     @cherrypy.expose
     def get(self, provider, version='latest', fmt='csv'):
-        pass
+        ver = version_controller(version, provider)
+        fichier = f'{ver.version_to_file(ver.get_latest_version())}.{fmt}'
+        if os.path.isfile(fichier):
+            with open(fichier, 'rb') as fd:
+                return fd.read()
+        else:
+            raise cherrypy.HTTPError(404)
 
 
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
 import csv
 import os
-from fmt import Fmt
+from Fmt import Fmt
 
 
 class CSVFormatter(Fmt):
