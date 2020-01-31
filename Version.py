@@ -49,8 +49,11 @@ class version_controller:
                     'version.ini file!'
                 )
 
-    def get_specific_version(self, annee, mois, jour):
-        pass
+    def get_specific_version(self, version):
+        if version == 'latest':
+            return self.get_latest_version()
+        else:
+            version = split
 
     def set_latest_version(self):
         if os.path.isfile(self.path_to_ini):
@@ -58,15 +61,13 @@ class version_controller:
             parser.read(self.path_to_ini)
             if parser.has_section('version'):
                 old = parser['version']['latest']
-                new = dt.now().strftime('%d_%m_%Y')
+                new = dt.now().strftime('%d-%m-%Y')
                 parser['version']['latest'] = new
                 parser['version']['old'] = old
                 with open(self.path_to_ini, 'w') as cf:
                     parser.write(cf)
         else:
-            actual = self.get_version_from_file(
-                f'{self.provider.lower()}_latest.txt'
-            )
+            raise Exception('set_latest_version: ini file not found!')
 
     def version_to_file(self, version):
         if version:
