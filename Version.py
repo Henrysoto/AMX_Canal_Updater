@@ -2,11 +2,17 @@ import os
 from configparser import ConfigParser
 from datetime import datetime as dt
 
+PROVIDERS = ['Canalsat', 'Bouygues', 'Orange', 'SFR']
+
 
 class version_controller:
     def __init__(self, version, provider):
         self.version = version
         self.provider = str(provider)
+
+        if self.provider.capitalize() not in PROVIDERS:
+            raise Exception('__init__: Unknown provider')
+
         path_exist = os.path.join('', 'providers', self.provider.capitalize())
         if os.path.isdir(path_exist):
             self.path_to_provider = os.path.join(
