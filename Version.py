@@ -49,12 +49,6 @@ class version_controller:
                     'version.ini file!'
                 )
 
-    def get_specific_version(self, version):
-        if version == 'latest':
-            return self.get_latest_version()
-        else:
-            version = split
-
     def set_latest_version(self):
         if os.path.isfile(self.path_to_ini):
             parser = ConfigParser()

@@ -14,8 +14,13 @@ class Updater(object):
 
     @cherrypy.expose
     def get(self, provider, version='latest', fmt='csv'):
+        print(f'version={version}\nprovider={provider}\nfmt={fmt}')
         ver = version_controller(version, provider)
-        fichier = f'{ver.version_to_file(ver.get_latest_version())}.{fmt}'
+        if version == 'latest':
+            fichier = f'{ver.version_to_file(ver.get_latest_version())}.{fmt}'
+        else:
+            fichier = f'{ver.version_to_file(version)}.{fmt}'
+            print(fichier)
         if os.path.isfile(fichier):
             with open(fichier, 'rb') as fd:
                 return fd.read()
